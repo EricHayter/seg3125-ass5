@@ -1,0 +1,211 @@
+h2 {
+  position: relative;
+  font-size: 2rem;
+  color: #2E7D32;
+  margin: 2rem 0 1.2rem 0;
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.avo-emoji {
+  font-size: 2.1rem;
+  vertical-align: middle;
+  margin: 0 0.3em;
+  filter: drop-shadow(0 2px 2px #FFF8DC) drop-shadow(0 1px 6px #4CAF5033);
+}
+/* Language switcher top right */
+.lang-switcher {
+  position: absolute;
+  top: 1.5rem;
+  right: 2.5rem;
+  z-index: 10;
+}
+
+.lang-btn {
+  font-size: 1.15rem;
+  font-weight: bold;
+  background: none;
+  border: none;
+  color: #2E7D32;
+  text-decoration: none;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.lang-btn:hover, .lang-btn:focus {
+  background: #E8F5E9;
+  color: #4CAF50;
+  outline: none;
+}
+/* Main content column */
+.main-column {
+  max-width: 700px;
+  margin: 2.5rem auto;
+  padding: 2.5rem 2rem;
+  background: #fff;
+  border: 5px double #4CAF50;
+  border-radius: 2.5em;
+  box-shadow: 0 4px 24px rgba(46, 125, 50, 0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Color Palette
+Primary Green: #4CAF50
+Accent Green: #81C784
+Pit Brown: #5D4037
+Flesh Yellow: #FFF8DC
+Dark Leaf: #2E7D32
+Contrast Pink: #FF6F61
+*/
+/* Avocado Varieties Box Styling */
+/* Minimal Avocado Varieties Box Styling */
+/* Ensure all varieties stay on one line and don't wrap */
+.varieties {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+
+/* Avocado Variety Card - Clean, grid-based, compact layout */
+.variety {
+  background: #FFF8DC; /* Flesh Yellow */
+  border: 2.5px dashed #4CAF50; /* Primary Green */
+  border-radius: 1.8rem 0.7rem 1.8rem 0.7rem / 1.2rem 2.2rem 1.2rem 2.2rem;
+  box-shadow: 0 2px 10px 0 rgba(46, 125, 50, 0.07);
+  padding: 0.85rem 1.2rem 0.7rem 1.2rem;
+  margin: 0.3rem 0.3rem 0.3rem 0.3rem;
+  min-width: 150px;
+  max-width: 200px;
+  flex: 1 1 150px;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  grid-template-columns: 1fr;
+  align-items: start;
+  text-align: center;
+  row-gap: 0.18rem;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.18s;
+}
+.variety:hover {
+  border-color: #81C784; /* Accent Green */
+  box-shadow: 0 6px 18px rgba(76, 175, 80, 0.16);
+  transform: translateY(-4px) scale(1.035) rotate(-1deg);
+
+}
+
+/* Nickname at the top */
+.variety .nickname {
+  font-size: 1.45rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #FF6F61;
+  margin-bottom: 0.13rem;
+  font-family: 'Pacifico', 'Fredoka', cursive;
+  letter-spacing: 1px;
+  grid-row: 1;
+}
+
+/* PLU at the bottom */
+.variety .plu {
+  font-size: 1.01rem;
+  color: #2E7D32;
+  font-family: 'Fredoka', 'Quicksand', Arial, sans-serif;
+  font-weight: 600;
+  margin-bottom: 0.1em;
+  grid-row: 3;
+}
+
+/* Description in the middle, italic */
+.variety .desc {
+  font-size: 0.95rem;
+  color: #5D4037;
+  margin: 0.18rem 0 0 0;
+  font-style: italic;
+  grid-row: 2;
+}
+
+/* Weight at the very bottom */
+.variety .weight {
+  display: block;
+  font-size: 0.93rem;
+  color: #2E7D32;
+  font-weight: 600;
+  margin-top: 0.1rem;
+  grid-row: 4;
+}
+
+
+.variety .callout {
+  color: #FF6F61; /* Contrast Pink */
+  font-weight: 600;
+}
+
+body {
+  background-color: #F5E6B5; /* Deeper Flesh Yellow */
+  color: #5D4037; /* Pit Brown */
+  font-family: 'Fredoka', 'Quicksand', Arial, sans-serif;
+}
+
+
+h1, h2, h3 {
+  color: #2E7D32; /* Dark Leaf */
+}
+
+h1 {
+  font-family: 'Winky Rough', 'Pacifico', 'Fredoka', cursive;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 2.7rem;
+  color: #FF6F61; /* Contrast Pink */
+  text-shadow: 2px 4px 0 #FFF8DC, 0 2px 12px rgba(46,125,50,0.10);
+  margin-bottom: 1.2rem;
+  background: #FFE3E0; /* Soft pink */
+  padding: 0.6em 1.2em;
+  border-radius: 1.5em;
+  box-shadow: 0 2px 12px 0 rgba(255,111,97,0.08);
+  display: inline-block;
+}
+
+h2 {
+  background: #E8F5E9; /* Soft green */
+  padding: 0.4em 1em;
+  border-radius: 1.2em;
+  box-shadow: 0 2px 8px 0 rgba(76,175,80,0.07);
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+h2, h3 {
+  font-family: 'Fredoka', 'Quicksand', Arial, sans-serif;
+  font-weight: 700;
+}
+
+a, .btn-primary {
+  background-color: #4CAF50; /* Primary Green */
+  color: white;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  transition: background 0.2s;
+}
+
+a:hover, .btn-primary:hover {
+  background-color: #81C784; /* Accent Green */
+}
+
+.chart-container {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* Removed duplicate and Playfair Display font-family rules */

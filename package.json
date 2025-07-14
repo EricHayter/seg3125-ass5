@@ -1,0 +1,20 @@
+{
+  "name": "seg3125-ass5",
+  "version": "1.0.0",
+  "description": "Avocado info site",
+  "homepage": "https://github.com/EricHayter/seg3125-ass5#readme",
+  "bugs": {
+    "url": "https://github.com/EricHayter/seg3125-ass5/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricHayter/seg3125-ass5.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
