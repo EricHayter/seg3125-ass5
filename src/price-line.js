@@ -1,5 +1,9 @@
 // Line chart for avocado price over time using Chart.js and PapaParse
+
+
 let priceLineChart = null;
+let priceWindowDates = [];
+let priceWindowAllData = [];
 
 function renderPriceLineChart(allData) {
   // Group by date, average price for each date
@@ -16,8 +20,56 @@ function renderPriceLineChart(allData) {
   const dates = Object.keys(dateMap).sort();
   const avgPrices = dates.map(date => dateMap[date].sum / dateMap[date].count);
 
+  // Save for dropdowns
+  priceWindowDates = dates;
+  priceWindowAllData = avgPrices;
+
+  setupPriceWindowDropdowns();
+  updatePriceLineChart();
+}
+
+function setupPriceWindowDropdowns() {
+  const startSel = document.getElementById('priceWindowStart');
+  const endSel = document.getElementById('priceWindowEnd');
+  if (!startSel || !endSel || priceWindowDates.length === 0) return;
+  startSel.innerHTML = '';
+  endSel.innerHTML = '';
+  priceWindowDates.forEach((date, idx) => {
+    const opt1 = document.createElement('option');
+    opt1.value = idx;
+    opt1.textContent = date;
+    startSel.appendChild(opt1);
+    const opt2 = document.createElement('option');
+    opt2.value = idx;
+    opt2.textContent = date;
+    endSel.appendChild(opt2);
+  });
+  startSel.value = 0;
+  endSel.value = priceWindowDates.length - 1;
+
+  startSel.onchange = function() {
+    if (parseInt(startSel.value) > parseInt(endSel.value)) {
+      startSel.value = endSel.value;
+    }
+    updatePriceLineChart();
+  };
+  endSel.onchange = function() {
+    if (parseInt(endSel.value) < parseInt(startSel.value)) {
+      endSel.value = startSel.value;
+    }
+    updatePriceLineChart();
+  };
+}
+
+function updatePriceLineChart() {
+  const startSel = document.getElementById('priceWindowStart');
+  const endSel = document.getElementById('priceWindowEnd');
   const chartCanvas = document.getElementById('priceLineChart');
-  if (!chartCanvas) return;
+  if (!startSel || !endSel || !chartCanvas) return;
+  const minIdx = parseInt(startSel.value);
+  const maxIdx = parseInt(endSel.value);
+  const dates = priceWindowDates.slice(minIdx, maxIdx + 1);
+  const avgPrices = priceWindowAllData.slice(minIdx, maxIdx + 1);
   const ctx = chartCanvas.getContext('2d');
   if (priceLineChart) priceLineChart.destroy();
   priceLineChart = new Chart(ctx, {

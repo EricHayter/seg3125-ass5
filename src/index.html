@@ -53,12 +53,22 @@
                 <!-- Bag size checkboxes removed -->
             </div>
             <canvas id="bagSizePieChart"></canvas>
+            <div id="pieBlurb" style="margin:0.7em 0 0.5em 0;font-size:1.08em;color:#5D4037;text-align:center;"></div>
         </section>
 
         <!-- Line chart for avocado price over time -->
-        <section style="width:100%;max-width:600px;margin:2.5rem auto 1.5rem auto;">
-            <h2 style="margin-bottom:1rem;text-align:center;">Avocado Price Over Time</h2>
+        <section style="width:100%;max-width:500px;margin:2.5rem auto 1.5rem auto;">
+            <h2 style="margin-bottom:1rem;">Avocado Price Over Time</h2>
+            <div id="priceWindowContainer" style="margin:1.2rem 0 1.5rem 0;display:flex;flex-direction:column;align-items:center;">
+                <div style="width:100%;max-width:420px;display:flex;align-items:center;gap:1em;">
+                    <label for="priceWindowStart" style="font-weight:bold;">Start:</label>
+                    <select id="priceWindowStart" style="flex:1;"></select>
+                    <label for="priceWindowEnd" style="font-weight:bold;">End:</label>
+                    <select id="priceWindowEnd" style="flex:1;"></select>
+                </div>
+            </div>
             <canvas id="priceLineChart"></canvas>
+            <div id="lineBlurb" style="margin:0.7em 0 0.5em 0;font-size:1.08em;color:#5D4037;text-align:center;"></div>
         </section>
         </section>
         </div>
@@ -66,5 +76,105 @@
     <!-- Load bag-size-pie.js after all DOM elements are available -->
     <script src="bag-size-pie.js"></script>
     <script src="price-line.js"></script>
+    <script>
+    // Language switching logic
+    const translations = {
+      en: {
+        title: 'The Avo Index',
+        desc: 'The Avo Index is a comprehensive resource for avocado enthusiasts, providing detailed information on various avocado varieties, their characteristics, and culinary uses. Whether you\'re a chef looking to explore new flavors or a home cook wanting to learn more about this versatile fruit, the Avo Index has you covered.',
+        varieties: 'Avocado Varieties',
+        snackado: 'The Snackado',
+        snackadoDesc: 'The small/medium hass avocado',
+        brunchboss: 'The Brunch Boss',
+        brunchbossDesc: 'The large hass avocado',
+        guacgiant: 'The Guac Giant',
+        guacgiantDesc: 'The extra large hass avocado',
+        weight1: 'Weight: ~3-5 oz',
+        weight2: 'Weight: ~8-10 oz',
+        weight3: 'Weight: ~10-15 oz',
+        plu1: 'PLU: 4046',
+        plu2: 'PLU: 4225',
+        plu3: 'PLU: 4770',
+        pieTitle: 'Avocado Sales by Bag Size',
+        year: 'Year:',
+        lineTitle: 'Avocado Price Over Time',
+        start: 'Start:',
+        end: 'End:',
+        pieBlurb: 'This chart shows the proportion of avocados sold in each bag size for the selected year.',
+        lineBlurb: 'This chart displays the average price of avocados over time. Use the dropdowns to select a date range.',
+      },
+      es: {
+        title: 'El Índice del Avo',
+        desc: 'El Índice del Avo es un recurso integral para los entusiastas del aguacate, que proporciona información detallada sobre varias variedades de aguacate, sus características y usos culinarios. Ya sea que seas un chef buscando explorar nuevos sabores o un cocinero casero que quiera aprender más sobre esta fruta versátil, el Índice del Avo te cubre.',
+        varieties: 'Variedades de Aguacate',
+        snackado: 'El Bocadillo',
+        snackadoDesc: 'El aguacate hass pequeño/mediano',
+        brunchboss: 'El Jefe del Brunch',
+        brunchbossDesc: 'El aguacate hass grande',
+        guacgiant: 'El Gigante del Guac',
+        guacgiantDesc: 'El aguacate hass extra grande',
+        weight1: 'Peso: ~85-140 g',
+        weight2: 'Peso: ~225-280 g',
+        weight3: 'Peso: ~280-425 g',
+        plu1: 'PLU: 4046',
+        plu2: 'PLU: 4225',
+        plu3: 'PLU: 4770',
+        pieTitle: 'Ventas de Aguacate por Tamaño de Bolsa',
+        year: 'Año:',
+        lineTitle: 'Precio del Aguacate a lo Largo del Tiempo',
+        start: 'Inicio:',
+        end: 'Fin:',
+        pieBlurb: 'Este gráfico muestra la proporción de aguacates vendidos en cada tamaño de bolsa para el año seleccionado.',
+        lineBlurb: 'Este gráfico muestra el precio promedio de los aguacates a lo largo del tiempo. Usa los menús para seleccionar un rango de fechas.',
+      }
+    };
+    function setLang(lang) {
+      const t = translations[lang];
+      document.querySelector('h1').textContent = t.title;
+      document.querySelector('.main-column > p').textContent = t.desc;
+      document.querySelector('h2').innerHTML = `<span class="avo-emoji">🥑</span> ${t.varieties} <span class="avo-emoji">🥑</span>`;
+      const vs = document.querySelectorAll('.variety');
+      if (vs.length === 3) {
+        vs[0].querySelector('.nickname').textContent = t.snackado;
+        vs[0].querySelector('.desc').textContent = t.snackadoDesc;
+        vs[0].querySelector('.plu').textContent = t.plu1;
+        vs[0].querySelector('.weight').textContent = t.weight1;
+        vs[1].querySelector('.nickname').textContent = t.brunchboss;
+        vs[1].querySelector('.desc').textContent = t.brunchbossDesc;
+        vs[1].querySelector('.plu').textContent = t.plu2;
+        vs[1].querySelector('.weight').textContent = t.weight2;
+        vs[2].querySelector('.nickname').textContent = t.guacgiant;
+        vs[2].querySelector('.desc').textContent = t.guacgiantDesc;
+        vs[2].querySelector('.plu').textContent = t.plu3;
+        vs[2].querySelector('.weight').textContent = t.weight3;
+      }
+      // Pie chart section
+      document.querySelector('section h2').textContent = t.pieTitle;
+      document.querySelector('label[for="yearSelect"]').textContent = t.year;
+      document.getElementById('pieBlurb').textContent = t.pieBlurb;
+      // Line chart section
+      const lineSection = document.querySelectorAll('section')[1];
+      if (lineSection) {
+        lineSection.querySelector('h2').textContent = t.lineTitle;
+        const labels = lineSection.querySelectorAll('label');
+        if (labels.length === 2) {
+          labels[0].textContent = t.start;
+          labels[1].textContent = t.end;
+        }
+        const blurb = lineSection.querySelector('#lineBlurb');
+        if (blurb) blurb.textContent = t.lineBlurb;
+      }
+    }
+    document.querySelectorAll('.lang-btn')[0].addEventListener('click', function(e) {
+      e.preventDefault();
+      setLang('es');
+    });
+    document.querySelectorAll('.lang-btn')[1].addEventListener('click', function(e) {
+      e.preventDefault();
+      setLang('en');
+    });
+    // Default to English
+    setLang('en');
+    </script>
 </body>
 </html>
