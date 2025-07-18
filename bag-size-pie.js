@@ -3,16 +3,8 @@ window.currentLang = window.currentLang || 'en';
 // Allow language switching for pie chart labels
 window.setPieChartLabels = function(lang) {
   window.currentLang = lang;
-
-  // print the values of the variables in the if satement bellow
-  console.log(window.pieChart);
-  console.log(window.translations);
-  console.log(window.translations[lang]);
   if (window.pieChart && window.translations && window.translations[lang]) {
     const newLabels = window.translations[lang].bagLabels;
-    console.log('[setPieChartLabels] lang:', lang);
-        // print the new labels for debugging
-    console.log('[setPieChartLabels] newLabels:', newLabels);
     window.pieChart.data.labels = newLabels;
     window.pieChart.update();
   }
