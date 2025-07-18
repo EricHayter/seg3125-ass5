@@ -77,7 +77,9 @@ window.setLineChartLang = function(lang) {
   if (window.priceLineChart.data && window.priceLineChart.data.datasets && window.priceLineChart.data.datasets[0]) {
     window.priceLineChart.data.datasets[0].label = t.lineTitle;
   }
-  window.priceLineChart.update();
+  if (typeof window.priceLineChart.update === 'function') {
+    window.priceLineChart.update();
+  }
 };
 
 function updatePriceLineChart() {
