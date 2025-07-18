@@ -57,5 +57,8 @@ Papa.parse('data/avocado.csv', {
     }
     // No bag size checkboxes to listen for
     renderPieChart('all');
+    if (window.renderPriceLineChart) {
+      window.renderPriceLineChart(allData);
+    }
   }
 });
