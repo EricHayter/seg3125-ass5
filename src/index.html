@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="style.css">
     <!-- Fun and interesting fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Pacifico&family=Quicksand:wght@400;700&family=Winky+Rough&display=swap" rel="stylesheet">
+    <!-- Chart.js and PapaParse from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+</head>
 </head>
 <nav class="lang-switcher">
     <a href="#" class="lang-btn">ESP 🇪🇸</a>
@@ -13,6 +17,7 @@
 </nav>
 <body>
     <div class="main-column">
+        <!-- Move bag-size-pie.js script to the end of the body for correct DOM access -->
         <h1>The Avo Index</h1>
         <p>
             The Avo Index is a comprehensive resource for avocado enthusiasts, providing detailed information on various avocado varieties, their characteristics, and culinary uses. Whether you're a chef looking to explore new flavors or a home cook wanting to learn more about this versatile fruit, the Avo Index has you covered.
@@ -39,6 +44,19 @@
                 <div class="weight">Weight: ~10-15 oz</div>
             </div>
         </div>
+        <!-- Pie chart for bag size proportions -->
+        <section style="width:100%;max-width:500px;margin:2.5rem auto 1.5rem auto;">
+            <h2 style="margin-bottom:1rem;">Avocado Sales by Bag Size</h2>
+            <div style="margin-bottom:1rem;">
+                <label for="yearSelect" style="font-weight:bold;">Year:</label>
+                <select id="yearSelect" style="margin:0 1.5em 0 0;padding:0.3em 1em;border-radius:0.7em;border:1.5px solid #4CAF50;font-size:1.1em;"></select>
+                <!-- Bag size checkboxes removed -->
+            </div>
+            <canvas id="bagSizePieChart"></canvas>
+        </section>
+        </div>
     </div>
+    <!-- Load bag-size-pie.js after all DOM elements are available -->
+    <script src="bag-size-pie.js"></script>
 </body>
 </html>
