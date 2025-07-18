@@ -46,14 +46,14 @@
         </div>
         <!-- Pie chart for bag size proportions -->
         <section style="width:100%;max-width:500px;margin:2.5rem auto 1.5rem auto;">
-            <h2 style="margin-bottom:1rem;">Avocado Sales by Bag Size</h2>
+            <h2 id="pieTitle" style="margin-bottom:1rem;">Avocado Sales by Bag Size</h2>
             <div style="margin-bottom:1rem;">
-                <label for="yearSelect" style="font-weight:bold;">Year:</label>
+                <label id="yearLabel" for="yearSelect" style="font-weight:bold;">Year:</label>
                 <select id="yearSelect" style="margin:0 1.5em 0 0;padding:0.3em 1em;border-radius:0.7em;border:1.5px solid #4CAF50;font-size:1.1em;"></select>
                 <!-- Bag size checkboxes removed -->
             </div>
             <canvas id="bagSizePieChart"></canvas>
-            <div id="pieBlurb" style="margin:0.7em 0 0.5em 0;font-size:1.08em;color:#5D4037;text-align:center;"></div>
+            <div id="pieBlurb" style="margin:0.7em 0 0.5em 0;font-size:1.08em;color:#5D4037;text-align:center;">This chart shows the proportion of avocados sold in each bag size for the selected year.</div>
         </section>
 
         <!-- Line chart for avocado price over time -->
@@ -96,8 +96,11 @@
         plu2: 'PLU: 4225',
         plu3: 'PLU: 4770',
         pieTitle: 'Avocado Sales by Bag Size',
+        bagLabels: ['Small Bags', 'Large Bags', 'XLarge Bags'],
         year: 'Year:',
         lineTitle: 'Avocado Price Over Time',
+        lineXAxis: 'Date',
+        lineYAxis: 'Average Price (USD)',
         start: 'Start:',
         end: 'End:',
         pieBlurb: 'This chart shows the proportion of avocados sold in each bag size for the selected year.',
@@ -120,14 +123,18 @@
         plu2: 'PLU: 4225',
         plu3: 'PLU: 4770',
         pieTitle: 'Ventas de Aguacate por Tamaño de Bolsa',
+        bagLabels: ['Bolsas Pequeñas', 'Bolsas Grandes', 'Bolsas Extra Grandes'],
         year: 'Año:',
         lineTitle: 'Precio del Aguacate a lo Largo del Tiempo',
+        lineXAxis: 'Fecha',
+        lineYAxis: 'Precio Promedio (USD)',
         start: 'Inicio:',
         end: 'Fin:',
         pieBlurb: 'Este gráfico muestra la proporción de aguacates vendidos en cada tamaño de bolsa para el año seleccionado.',
         lineBlurb: 'Este gráfico muestra el precio promedio de los aguacates a lo largo del tiempo. Usa los menús para seleccionar un rango de fechas.',
       }
     };
+    window.translations = translations;
     function setLang(lang) {
       const t = translations[lang];
       document.querySelector('h1').textContent = t.title;
@@ -152,6 +159,19 @@
       document.querySelector('section h2').textContent = t.pieTitle;
       document.querySelector('label[for="yearSelect"]').textContent = t.year;
       document.getElementById('pieBlurb').textContent = t.pieBlurb;
+      // Update pie chart labels if chart exists
+      if (window.setPieChartLabels) {
+        window.setPieChartLabels(lang);
+      }
+      // Update line chart axis titles and dataset label if chart exists
+      if (window.setLineChartLang) {
+        window.setLineChartLang(lang);
+      }
+      // Update pie chart axis/title if needed (not typical for pie, but placeholder)
+      if (window.pieChart && window.pieChart.options && window.pieChart.options.plugins && window.pieChart.options.plugins.title) {
+        window.pieChart.options.plugins.title.text = t.pieTitle;
+        window.pieChart.update();
+      }
       // Line chart section
       const lineSection = document.querySelectorAll('section')[1];
       if (lineSection) {
@@ -164,14 +184,17 @@
         const blurb = lineSection.querySelector('#lineBlurb');
         if (blurb) blurb.textContent = t.lineBlurb;
       }
+      // (Line chart axis/dataset update now handled by setLineChartLang)
     }
     document.querySelectorAll('.lang-btn')[0].addEventListener('click', function(e) {
       e.preventDefault();
       setLang('es');
+      console.log('Language switched to: es');
     });
     document.querySelectorAll('.lang-btn')[1].addEventListener('click', function(e) {
       e.preventDefault();
       setLang('en');
+      console.log('Language switched to: en');
     });
     // Default to English
     setLang('en');

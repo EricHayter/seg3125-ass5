@@ -1,3 +1,22 @@
+// Track the current language globally
+window.currentLang = window.currentLang || 'en';
+// Allow language switching for pie chart labels
+window.setPieChartLabels = function(lang) {
+  window.currentLang = lang;
+
+  // print the values of the variables in the if satement bellow
+  console.log(window.pieChart);
+  console.log(window.translations);
+  console.log(window.translations[lang]);
+  if (window.pieChart && window.translations && window.translations[lang]) {
+    const newLabels = window.translations[lang].bagLabels;
+    console.log('[setPieChartLabels] lang:', lang);
+        // print the new labels for debugging
+    console.log('[setPieChartLabels] newLabels:', newLabels);
+    window.pieChart.data.labels = newLabels;
+    window.pieChart.update();
+  }
+};
 // Pie chart for bag size proportions using Chart.js and PapaParse
 let pieChart = null;
 let allData = [];
@@ -15,9 +34,13 @@ function renderPieChart(year) {
   if (!chartCanvas) return;
   const ctx = chartCanvas.getContext('2d');
   if (pieChart) pieChart.destroy();
-  // Always show all bag sizes
+  // Use translated bag size labels if available
+  let lang = window.currentLang || 'en';
+  let labelArr = ['Small Bags', 'Large Bags', 'XLarge Bags'];
+  if (window.translations && window.translations[lang]) {
+    labelArr = window.translations[lang].bagLabels;
+  }
   const dataArr = [small, large, xlarge];
-  const labelArr = ['Small Bags', 'Large Bags', 'XLarge Bags'];
   const colorArr = ['#81C784', '#4CAF50', '#FF6F61'];
   pieChart = new Chart(ctx, {
     type: 'pie',
@@ -38,6 +61,8 @@ function renderPieChart(year) {
       }
     }
   });
+  // Expose pieChart globally for language switching
+  window.pieChart = pieChart;
 }
 
 Papa.parse('data/avocado.csv', {
@@ -57,6 +82,10 @@ Papa.parse('data/avocado.csv', {
     }
     // No bag size checkboxes to listen for
     renderPieChart('all');
+    // If the language is not English, update the labels immediately
+    if (window.currentLang && window.currentLang !== 'en') {
+      window.setPieChartLabels(window.currentLang);
+    }
     if (window.renderPriceLineChart) {
       window.renderPriceLineChart(allData);
     }

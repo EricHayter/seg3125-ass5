@@ -61,6 +61,25 @@ function setupPriceWindowDropdowns() {
   };
 }
 
+window.setLineChartLang = function(lang) {
+  lang = lang || (window.currentLang || 'en');
+  if (!window.priceLineChart || !window.translations || !window.translations[lang]) return;
+  const t = window.translations[lang];
+  // Update axis titles and dataset label
+  if (window.priceLineChart.options && window.priceLineChart.options.scales) {
+    if (window.priceLineChart.options.scales.x && window.priceLineChart.options.scales.x.title) {
+      window.priceLineChart.options.scales.x.title.text = t.lineXAxis;
+    }
+    if (window.priceLineChart.options.scales.y && window.priceLineChart.options.scales.y.title) {
+      window.priceLineChart.options.scales.y.title.text = t.lineYAxis;
+    }
+  }
+  if (window.priceLineChart.data && window.priceLineChart.data.datasets && window.priceLineChart.data.datasets[0]) {
+    window.priceLineChart.data.datasets[0].label = t.lineTitle;
+  }
+  window.priceLineChart.update();
+};
+
 function updatePriceLineChart() {
   const startSel = document.getElementById('priceWindowStart');
   const endSel = document.getElementById('priceWindowEnd');
@@ -104,6 +123,8 @@ function updatePriceLineChart() {
       }
     }
   });
+  // Expose globally for language switching
+  window.priceLineChart = priceLineChart;
 }
 
 // Wait for Papa.parse in bag-size-pie.js to finish, then call this
